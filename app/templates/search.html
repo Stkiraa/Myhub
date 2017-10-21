@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <script type="text/javascript"> 
+    function Go(x) { 
+        var a = "http://127.0.0.1:5000/show_article?ID="+x;
+	window.open(a);
+        //window.location.href=a;
+	//xx = document.getElementById("test");
+	//xx.innerHTML=a;
+    } 
+    </script>
+    
+    <form action="{{ url_for('search') }}" method="post" class="add-entry">
+        <dl>
+	    <dt> Article Title:
+	    <dd><input type="type" size=30 name="title">
+	</dl>
+    </form>
+    <br/><br/>
+    <ul class=entries>
+    	{% for arc in arcs %}
+	    <li><h2>{{ arc.title }}</h2>
+		<input type="button" onclick="Go({{ arc.arc_id }})" value="view" />
+		{% if session.admin %}
+			<form action="{{ url_for('delete') }}" method="post" />
+				<input type="hidden" name="art_id" value="{{ arc.arc_id }}" />
+				<input type="hidden" name="title" value="{{ arc.title }}" />
+				<input type="submit" value="Dele" />
+			</form>
+			
+		{% endif %}
+	{% else %}<li><em>Sorry, there are no articles you've searched</em>
+	    {% endfor %}
+    </ul>
+    <p id="test"></p>
+{% endblock %}

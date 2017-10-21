@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+ 
+
+<form id="myform" action="{{ url_for('show_article') }}" method="post" >
+        <input id="demo" type="hidden" name="art_id" />
+</form>
+
+
+<script type="text/javascript">
+function GetRequest()
+{		
+    var strHref = window.location.href; //获取Url字串
+    var pos = strHref.indexOf("=");  // 参数开始位置
+	   
+    var str = strHref;
+           
+
+    xx = document.getElementById("demo");
+    xx.value = str.substr(pos+1);
+}
+function Submit()
+{
+    GetRequest();
+    document.getElementById("myform").submit();
+}  
+function Addcomt()
+{
+    var ID = document.getElementById("temp").innerHTML;
+    var a = "http://127.0.0.1:5000/add_comment?ID="+ID;
+    window.open(a);
+}
+function Reply(comtID)
+{	
+    var artID = document.getElementById("temp").innerHTML;
+    var a = "http://127.0.0.1:5000/reply?artID="+artID+"&comtID="+comtID;
+    window.open(a);
+}
+function Update()
+{
+    var artID = document.getElementById("temp").innerHTML;
+    var a = "http://127.0.0.1:5000/update?artID="+artID;
+    window.open(a);
+}
+</script>
+
+<div class="article">
+<h1>Article</h1>
+{%if session.admin %}
+<button type="button" onclick="Update()"> Update </button> 
+{% endif %}
+<p id="temp" hidden="hidden">{{ artid }}</p>
+<h2 id="h">{{ arctitle }}</h2>
+<p id="p">{{ arctext }}</p>
+</div>
+
+<h1>Comments</h1>
+<button type="button" onclick="Addcomt()"> +comments </button>
+<div class="comments">
+    {% for comt in comts %}
+	<dl>
+        <dt><h2>{{ comt.author }} {{comt.date}}</h2>
+        <dd>{{ comt.text|safe }}
+        </dl>
+	{% if session.admin %}
+	    <button type="button" onclick="Reply({{ comt.comtid }})"> Reply </button>
+        {% endif %}
+	{% for rcomt in comt.rcomts %}
+	    <li>{{rcomt.date}} re: <br />{{ rcomt.text }}
+	{% else %} <li><em>No reply
+	{%endfor%}
+    {% else %}<li><em>No comments here so far</em>
+    {% endfor %}
+</div>
+<script>
+    if(document.getElementById("h").innerHTML) {}
+    else {Submit()}
+</script>
+{% endblock %}

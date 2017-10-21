@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+ 
+
+<form id="myform" action="{{ url_for('reply') }}" method="post" >
+        <input id="comtID" type="hidden" name="comt_id" />
+	<input id="artID" type="hidden" name="art_id" />
+	<dl>
+	    <dt>Reply:
+	    <dd><textarea name=text rows=5 cols=40></textarea>
+	    <dd><input type=submit value=Submit>
+	</dl>
+
+</form>
+
+
+<script type="text/javascript">
+function GetRequest()
+{		
+    var strHref = window.location.href; //获取Url字串
+    var pos = strHref.indexOf("?");  // 参数开始位置
+    var str = strHref.substr(pos+1);
+    var a = str.split("&");
+    x1 = document.getElementById("artID");
+    x2 = document.getElementById("comtID");
+    var a0 = a[0];
+    var a1 = a[1];
+    var p0 = a0.indexOf("=");
+    var p1 = a1.indexOf("=");
+    x1.value = a0.substr(p0+1);
+    x2.value = a1.substr(p1+1);
+}
+
+GetRequest();
+</script>
+
+
+{% endblock %}

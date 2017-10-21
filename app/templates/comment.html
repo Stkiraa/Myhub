@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+ 
+
+<form id="myform" action="{{ url_for('add_comment') }}" method="post" >
+        <input id="demo" type="hidden" name="art_id" />
+	<dl>
+	    <dt>Edit Your Comments:
+	    <dd><textarea name=text rows=5 cols=40></textarea>
+	    <dd><input type=submit value=Submit>
+	</dl>
+
+</form>
+
+
+<script type="text/javascript">
+function GetRequest()
+{		
+    var strHref = window.location.href; //获取Url字串
+    var pos = strHref.indexOf("=");  // 参数开始位置
+	   
+    var str = strHref;
+           
+
+    xx = document.getElementById("demo");
+    xx.value = str.substr(pos+1);
+}
+
+GetRequest();
+</script>
+
+
+{% endblock %}

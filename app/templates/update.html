@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+ 
+
+<form id="myform" action="{{ url_for('update') }}" method="post" class=add-entry>
+	<input id="artID" type="hidden" name="art_id" />
+	<dl>
+	    <dt>Title:
+	    <dd><input type=text size=30 name=title value={{arctitle}}>
+	    <dt>Text:
+	    <dd><textarea name=text rows=5 cols=40>{{arctext}}</textarea>
+	    <dd><input type=submit value=Submit>
+	</dl>
+</form>
+
+
+<script type="text/javascript">
+function GetRequest()
+{		
+    var strHref = window.location.href; //获取Url字串
+    var pos = strHref.indexOf("=");  // 参数开始位置
+    var str = strHref.substr(pos+1);
+    x1 = document.getElementById("artID");
+    x1.value = str;
+}
+
+GetRequest();
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+<html>
+<head>
+{% if title %}
+<title>{{ title }} - 简寻</title>
+{% else %}
+<title>简寻</title>
+{% endif %}
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+</head>
+<body>
+<header class="header">
+<ul>
+<li class="cor-1"></li>
+<li class="cor-2"></li>
+<li class="cor-3"></li>
+<li class="cor-4"></li>
+<li class="cor-5"></li>
+</ul>
+</header>
+<div class="wrap">
+
+
+<nav class="menu">
+<ul>
+<li>
+<a href="/">Welcome</a>
+</li>
+<li>
+<a href="{{ url_for('show_entries') }}">Archive</a>
+</li>
+<li>
+<a href="{{ url_for('search') }}">Search</a>
+</li>
+</ul>
+</nav>
+<div class=metanav>
+<!--
+<aside class="sidebar">
+<div class="widget">
+<h2>Michael</h2>
+<p>Hello, my name’s <b>Jiacheng Hu</b>. I’m 22 years old. I live in <b>Wuhan (China)</b>. I am a <b>Student</b>.<br> Contact Me:<br><b>304109073@qq.com</b></p>
+</div>
+<div class="widget">
+<h2>Title</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+</div>
+
+</aside>
+-->
+<div class=metanav>
+<br />
+<a href="{{ url_for('signup')}}">sign up</a>
+{% if not session.logged_in %}
+<a href="{{ url_for('login') }}">log in</a>
+{% else %}
+<a href="{{ url_for('logout') }}">log out</a>
+{% endif %}
+</div>
+{% for message in get_flashed_messages() %}
+<div class=flash>{{ message }}</div>
+{% endfor %}
+<br /><br />																																      {% block content %}{% endblock %}
+</div>
+</body>
+</html>
+
